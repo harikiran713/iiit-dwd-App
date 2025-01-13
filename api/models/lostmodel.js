@@ -33,7 +33,7 @@ createdAt:
 {
     type:Date,
     default:Date.now,
-    expires:14*7*24*60*60,
+    expires:14*24*60*60,
 
 }
 })

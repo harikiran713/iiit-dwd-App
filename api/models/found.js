@@ -24,7 +24,7 @@ const foundSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now,
-        expires: 14 * 7 * 24 * 60 * 60 // 14 weeks in seconds
+        expires: 14 * 24 * 60 * 60 
     }
 });
 
