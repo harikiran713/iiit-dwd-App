@@ -4,5 +4,5 @@ const router =express.Router();
 // router.post('/google_auth',google);
 router.post('/otp/signup',OtpSignup);
 router.post('/verify/otp',verifyOtp)
-// router.post("/signin",signin);
+ router.post("/signin",signin);
 module.exports=router;

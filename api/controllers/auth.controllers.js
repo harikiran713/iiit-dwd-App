@@ -56,7 +56,7 @@ const signin=async(req,res,next)=>
     {
         return res.status(500).json({message:"invalid email or password"})
     }
-    const token =jwt.sign({id:user._id},"mgfck")
+    const token =jwt.sign({userId:user._id},"mgfck")
     res.status(200).json({token,messagae:"Login successful"});
 
    }

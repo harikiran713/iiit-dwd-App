@@ -1,8 +1,9 @@
 const mongoose=require("mongoose");
 const lostSchema=new mongoose.Schema({
-    user:{
+    userId:{
         type:mongoose.Schema.Types.ObjectId,
-        ref:"User"
+        ref:"User",
+        required:true
 
     },
     title:
@@ -20,8 +21,21 @@ description:
 },
 contact:
 {
+    type:String
+   // default:null
+},
+photoLink:
+{
     type:String,
-    default:null
+    required:true
+},
+createdAt:
+{
+    type:Date,
+    default:Date.now,
+    expires:14*7*24*60*60,
+
 }
 })
 const lostModel=mongoose.model("lostModel",lostSchema);
+module.exports=lostModel;

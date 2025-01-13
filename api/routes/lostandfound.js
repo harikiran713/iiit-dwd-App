@@ -1,7 +1,8 @@
 const express=require("express");
 const router=express.Router();
-router.post("/lost/create",lostCreate)
-router.post("/lost/view",lost-view);
-router.post("/found/create",found-create);
-router.post("/found/view",found-view);
+const {addLost,addFound,viewFound,viewLost}=require("../controllers/lost.found.controllers");
+router.post("/lost/add",authMiddleware,addLost)
+router.post("/lost/view",authMiddleware,viewLost);
+router.post("/found/add",authMiddleware,addFound);
+router.post("/found/view",authMiddleware,viewFound);
 module.exports=router;

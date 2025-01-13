@@ -23,16 +23,12 @@ app.use(express.json());
 //this is for parse the json to js object and provides it to the req.body as a js object
 
 
+
+
 // this is a error handling middlware when you call next(error) in any of the routes then the express skips all its middleware and look for next middleware this it that middleware 
-
-
-
 app.use("/api",authRouter);
 app.use("lostandfound",lostandfound);
-app.get("/",()=>
-{
 
-})
 
 app.use((err,req,res,next)=>
 {
