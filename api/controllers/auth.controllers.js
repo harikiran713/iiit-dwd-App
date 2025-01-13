@@ -1,7 +1,7 @@
 const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
-const Otp = require("../models/Otp.model.js");
-const User = require("../models/User.model.js");
+const Otp = require("../models/Otpmodel.js");
+const User = require("../models/Usermodel.js");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
@@ -90,7 +90,7 @@ const OtpSignup = async (req, res, next) => {
     }
 };
 
-// Verify OTP
+
 const verifyOtp = async (req, res, next) => {
     try {
         const { email, otp } = req.body;

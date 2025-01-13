@@ -1,5 +1,5 @@
-const lostModel = require("../models/lost.model");
-const foundModel = require("../models/found.model");
+const lostModel = require("../models/lostmodel");
+const foundModel = require("../models/found");
 
 const addLost = async (req, res, next) => {
     const { userId, title, description, contact, photoLink } = req.body;
