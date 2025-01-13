@@ -52,7 +52,7 @@ const OtpSignup = async (req, res, next) => {
 
         const Check_domain = email.split("@")[1];
         if (Check_domain !== "iiitdwd.ac.in") {
-            return res.status(400).json({ message: "Please use your college email ID." });
+            return res.status(400).json({ message: "Please our college email ID." });
         }
 
         const existingOtp = await Otp.findOne({ email });
@@ -101,7 +101,7 @@ const verifyOtp = async (req, res, next) => {
         }
 
         if (existingOtp.otp !== otp) {
-            return res.status(401).json({ message: "OTP mismatch." });
+            return res.status(401).json({ message: "OTP not matched." });
         }
 
         const token = jwt.sign(
