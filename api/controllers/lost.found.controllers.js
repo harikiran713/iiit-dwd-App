@@ -1,7 +1,6 @@
 const lostModel = require("../models/lost.model");
 const foundModel = require("../models/found.model");
 
-
 const addLost = async (req, res, next) => {
     const { userId, title, description, contact, photoLink } = req.body;
     try {
@@ -18,7 +17,6 @@ const addLost = async (req, res, next) => {
         res.status(500).json({ message: "Error in adding to lost items." });
     }
 };
-
 
 const addFound = async (req, res, next) => {
     const { userId, title, description, contact, photoLink } = req.body;
@@ -37,7 +35,6 @@ const addFound = async (req, res, next) => {
     }
 };
 
-
 const viewFound = async (req, res, next) => {
     try {
         const foundArray = await foundModel.find();
@@ -46,7 +43,6 @@ const viewFound = async (req, res, next) => {
         res.status(500).json({ message: "There was an error in viewing the found items." });
     }
 };
-
 
 const viewLost = async (req, res, next) => {
     try {

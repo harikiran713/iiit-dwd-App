@@ -3,12 +3,11 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+   
     "start": "nodemon index.js"
   },
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cors": "^2.8.5",
@@ -18,5 +17,6 @@
     "mongoose": "^8.9.3",
     "nodemailer": "^6.9.16",
     "nodemon": "^3.1.9"
-  }
+  },
+  "description": ""
 }

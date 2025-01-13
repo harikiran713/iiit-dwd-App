@@ -1,104 +1,64 @@
 const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
-const errorHandler = require("../utils/errorHandler");
 const Otp = require("../models/Otp.model.js");
-const jwt=require("jsonwebtoken");
+const User = require("../models/User.model.js");
+const jwt = require("jsonwebtoken");
 require("dotenv").config();
-// const transporter = require("../otp.js");
-// const signup= async(req,res,next)=>{
 
-// const {userName,email,password}=req.body;
-// if(!email || !userName || !password )
-// {
-//     next(errorHandler(500,"enter all the components"));
-// }
-// try
-// {
-//     if(!(User.findOne({email}))){
-//      const hashedpassword=bcrypt.hashSync(password,10);
-     
-//      const newUser=new User({email,password:hashedpassword});
-//      const saveUser =await newUser.save();
-//     }
-//     else{
-//         next(errorHandler(500,"user Already register"));
-//     }
+const signin = async (req, res, next) => {
+    try {
+        const { email, password } = req.body;
+        if (!email || !password) {
+            return res.status(400).json({ message: "Both email and password are required." });
+        }
 
+        const user = await User.findOne({ email });
+        if (!user) {
+            return res.status(401).json({ message: "Invalid email or password." });
+        }
 
-// }
-// catch(err)
-// {
-//     next(err);
+        const isPasswordValid = await bcrypt.compare(password, user.password);
+        if (!isPasswordValid) {
+            return res.status(401).json({ message: "Invalid email or password." });
+        }
 
-// }
-
-// }
-// const google=async(req,res,next)=>
-// {
-    
-// }
-const signin=async(req,res,next)=>
-{
-   try{
-    const {email,password}=req.body;
-    if(!email || !password)
-    {
-        return res.status(500).json({message:"both email and password required"})
+        const token = jwt.sign(
+            { userId: user._id },
+            "mgfck"
+        );
+        
+        res.status(200).json({ token, message: "Login successful." });
+    } catch (error) {
+        res.status(500).json({ message: "Error at the time of login." });
     }
-    const user= await User.findOne({email});
-    if(!user)
-    {
-        return res.status(500).json({message:"invalid email or password"});
+};
 
-    }
-    const check_password=await bcrypt.compare(password,user.password)//return true or false antha
-    if(!check_password)
-    {
-        return res.status(500).json({message:"invalid email or password"})
-    }
-    const token =jwt.sign({userId:user._id},"mgfck")
-    res.status(200).json({token,messagae:"Login successful"});
-
-   }
-   catch(error)
-   {
-res.status(500).json({messagae:"error in login"})
-   }
-    
-
-
+function generateOTP() {
+    return Math.floor(1000 + Math.random() * 9000).toString(); 
 }
-function generateOTP() {  
-    let otp = Math.floor(1000 + Math.random() * 9000);  
-    return otp.toString(); 
-}  
 
-const OtpSignup = async (req, res, next) => {  
-    try {  
-       // console.log(req.body);  
-        const { email } = req.body;  
-        const existing_user_check=User.findOne({email});
-        if(existing_user_check)
-        {
-            return res.status(200).json({message:"this user alredy exits"})
-        }
-        const check_email="@"+email.split('@')[1];
-        if(check_email!="@iiitdwd.ac.in")
-        {
- return res.status(500).json({message:"please use you collage email id"})
+const OtpSignup = async (req, res, next) => {
+    try {
+        const { email } = req.body;
+
+        if (!email) {
+            return res.status(400).json({ message: "Email is required." });
         }
 
-        if (!email) {  
-            return res.status(400).json({ message: "Email is required" });  
-        }  
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(409).json({ message: "This user already exists." });
+        }
 
-    
+        const Check_domain = email.split("@")[1];
+        if (Check_domain !== "iiitdwd.ac.in") {
+            return res.status(400).json({ message: "Please use your college email ID." });
+        }
 
-        let Otp_sent = await Otp.findOne({ email });  
-       // console.log(existingOtp);
-        if (Otp_sent) {  
-            return res.json({ message: "OTP already sent" });  
-        }  
+        const existingOtp = await Otp.findOne({ email });
+        if (existingOtp) {
+            return res.status(429).json({ message: "OTP already sent. Please wait." });
+        }
 
         const transporter = nodemailer.createTransport({
             service: "gmail",
@@ -110,71 +70,76 @@ const OtpSignup = async (req, res, next) => {
             },
         });
 
-        const otp = generateOTP();  
-        const mailOptions = {  
-            from: "harikiranl713@gmail.com",   
-            to: email,  
-            subject: "Your OTP code to login to the IIIT-DWD-APP",  
-            text: `Your OTP code is ${otp} ...it is valid for only 5 minutes`,  
-        };  
-       
+        const otp = generateOTP();
+        const mailOptions = {
+            from:"harikiranl713@gmail.com",
+            to: email,
+            subject: "Your OTP Code for IIIT-DWD App",
+            text: `Your OTP code is ${otp}. It is valid for 5 minutes.`,
+        };
 
+        await transporter.sendMail(mailOptions);
 
-      
+        const newOtp = new Otp({ email, otp});
+        await newOtp.save();
 
-        await transporter.sendMail(mailOptions).then( async()=>
-        {
-
-        let newOtp=new Otp({email,otp});
-          newOtp.save();
-            return res.status(200).json({ message: "OTP sent successfully" });
-        });  
-       
-    } catch (err) {  
-        console.error("Error:", err);  
-        return next(new Error("An error occurred"));  
-    }  
-};
-const verifyOtp=(req,res,next)=>
-{
-     const {email,otp}=req.body;
-     const check_otp_existing=Otp.findOne({email});
-     if(check_otp_existing)
-     {
-        const {email,otp_have}=Otp.findOne({email});
-        if(otp==otp_have)
-        {
-           return res.status(200).json({message:"verified successfully",success:"true"})
-        }
-        else
-        {
-            return res.status(500).json({message:"otp has missmatched",success:"false"});
-        }
-
-     }
-
-
-}
-const keep_password_user=(req,res,next)=>
-{
-    const {email,userName,password,confirmPassword}=req.body;
-    if(password!=confirmPassword)
-    {
-        return next(errorHandler(500,"password is not matching"))
+        res.status(200).json({ message: "OTP sent successfully." });
+    } catch (err) {
+        console.error("Error:", err);
+        res.status(500).json({ message: "An error  while sending OTP." });
     }
-    
-    const hashedpassword=bcrypt.hashSync(password,10)
-   const new_user=new User({email,userName,password:hashedpassword})
-   new_user.save().then(()=>
-{
-    return res.status(200).json({messagae:"sign up completed sucessfully",success:true})
-
-});
-  
-
-}
-
-module.exports = {  
-    OtpSignup,verifyOtp  
 };
-console.log(process.env)
+
+// Verify OTP
+const verifyOtp = async (req, res, next) => {
+    try {
+        const { email, otp } = req.body;
+        const existingOtp = await Otp.findOne({ email });
+
+        if (!existingOtp) {
+            return res.status(404).json({ message: "No OTP found to this  email." });
+        }
+
+        if (existingOtp.otp !== otp) {
+            return res.status(401).json({ message: "OTP mismatch." });
+        }
+
+        const token = jwt.sign(
+            { email },
+            "conformingOtp",
+            { expiresIn: "10m" }
+        );
+
+        res.status(200).json({ message: "OTP verified successfully.", token });
+    } catch (err) {
+        res.status(500).json({ message: "An error occurred during OTP verification." });
+    }
+};
+
+const keepPasswordUser = async (req, res, next) => {
+    try {
+        const { token, userName, password, confirmPassword } = req.body;
+
+        if (password !== confirmPassword) {
+            return res.status(400).json({ message: "Passwords do not match." });
+        }
+
+        const decoded = jwt.verify(token, "conformingOtp");
+        const { email } = decoded;
+
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const newUser = new User({ email, userName, password: hashedPassword });
+
+        await newUser.save();
+        res.status(200).json({ message: "Signup completed successfully." });
+    } catch (error) {
+        res.status(500).json({ message: "An error occurred during signup." });
+    }
+};
+
+module.exports = {
+    signin,
+    OtpSignup,
+    verifyOtp,
+    keepPasswordUser,
+};

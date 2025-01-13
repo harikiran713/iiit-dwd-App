@@ -1,37 +1,34 @@
-const mongoose=require("mongoose")
-const foundSchema=new mongoose.Schema({
-    userId:{
-        type:mongoose.Schema.Types.ObjectId,
-        ref:'User'
+const mongoose = require("mongoose");
+
+const foundSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
     },
-    title:
-    {
-        type:String,
-        required:true
+    title: {
+        type: String,
+        required: true
     },
-    description:
-    {
-        type:String,
-        required:true
+    description: {
+        type: String,
+        required: true
     },
-    contact:
-    {
-        type:String
+    contact: {
+        type: String
     },
-    photoLink:
-    {
-        type:String,
-        required:true
+    photoLink: {
+        type: String,
+        required: true
     },
-    createdAt:
-    {
-        type:Date,
-        default:Date.now,
-        expires:14*7*24*60*60,
+    createdAt: {
+        type: Date,
+        default: Date.now,
+        expires: 14 * 7 * 24 * 60 * 60 // 14 weeks in seconds
     }
+});
 
 
+const foundModel = mongoose.model('Found', foundSchema);
 
-})
-const foundModel=mongoose.Schema('foundModel',foundSchema);
-module.exports=foundModel;
+module.exports = foundModel;
