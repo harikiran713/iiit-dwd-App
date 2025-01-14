@@ -7,7 +7,9 @@ router.post('/signup/otp', OtpSignup);
 router.post('/verify/otp', verifyOtp);
 router.post("/signin", signin);
 router.post('/signup/otpverifed/setpassword',keepPasswordUser);
-router.post('/forgotenPassword/otp',FPotp);
+router.post('/forgotenPassword/otp',forgottenPassword);
+router.post('/forgoten/verifyOTP',verifyOtp)
+router.post('forgoten/setPassword',keepForgottenPassword)
 
 
 module.exports = router;
