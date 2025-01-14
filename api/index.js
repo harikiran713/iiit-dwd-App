@@ -18,8 +18,10 @@ app.use(express.json());
 
 
 
+
 app.use("/api/auth", authRouter);
 app.use("/api/lostandfound", lostandfound);
+
 
 app.use((err, req, res, next) => {
     const statuscode = err.statusCode || 500;

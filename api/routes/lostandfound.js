@@ -8,4 +8,5 @@ router.post("/lost/view", authMiddleware, viewLost);
 router.post("/found/add", authMiddleware, addFound);
 router.post("/found/view", authMiddleware, viewFound);
 
+
 module.exports = router;

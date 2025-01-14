@@ -49,7 +49,7 @@ const OtpSignup = async (req, res, next) => {
         if (existingUser) {
             return res.status(409).json({ message: "This user already exists." });
         }
-
+console.log(process.env.PASSWORD);
         const Check_domain = email.split("@")[1];
         if (Check_domain !== "iiitdwd.ac.in") {
             return res.status(400).json({ message: "Please our college email ID." });
@@ -136,6 +136,58 @@ const keepPasswordUser = async (req, res, next) => {
         res.status(500).json({ message: "An error occurred during signup." });
     }
 };
+//for the forgoten password i am  sending the otp to mail to keep the new password 
+const forgotenPassword=async(req,res,next)=>
+{
+    const {email}=req.body;
+    
+    const existingOtp = await Otp.findOne({ email });
+    if (existingOtp) {
+        return res.status(429).json({ message: "OTP already sent. Please wait." });
+    }
+    const check_existing_user=User.findOne({email});
+    if(!check_existing_user)
+    {
+        return res.status(400).json({message:"User does not exists"})
+    }
+    try{
+const Check_domain=email.split('@')[1];
+if(Check_domain!="iiitdwd.ac.in")
+{
+    return res.status(400).json({message:"this email your collage id"});
+}
+
+const transporter = nodemailer.createTransport({
+    service: "gmail",
+    host: "smtp.gmail.com",
+    port: 587,
+    auth: {
+        user: "harikiranl713@gmail.com",
+        pass: "ktuj ghhv ldfu qhkz",
+    },
+});
+
+const otp = generateOTP();
+const mailOptions = {
+    from:"harikiranl713@gmail.com",
+    to: email,
+    subject: "Your OTP Code for IIIT-DWD App",
+    text: `Your OTP code is ${otp}. It is valid for 5 minutes.`,
+};
+
+await transporter.sendMail(mailOptions);
+
+const newOtp = new Otp({ email, otp});
+await newOtp.save();
+
+res.status(200).json({ message: "OTP sent successfully." })
+
+    }
+    catch(err)
+    {
+res.json({message:"error in sending the otp"});
+    }
+}
 
 module.exports = {
     signin,
