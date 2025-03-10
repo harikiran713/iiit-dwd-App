@@ -215,7 +215,7 @@ const keepForgottenPassword = async (req, res, next) => {
         const hashedPassword = await bcrypt.hash(password, 10);
 
         
-        user.password = hashedPassword;
+        user.password = hashedPasword;
         await user.save();
 
         res.status(200).json({ message: "Password updated successfully." });
@@ -231,6 +231,7 @@ module.exports = {
     OtpSignup,
     verifyOtp,
     keepPasswordUser,
-    forgotenPassword,
+  
     keepForgottenPassword,
+    forgottenPassword 
 };
