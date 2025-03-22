@@ -5,7 +5,15 @@ const mongoose = require("mongoose");
 const authRouter = require("./routes/auth.routes.js");
 const lostandfound = require("./routes/lostandfound.js");
 const awsUpload=require("./routes/upload")
+
 const itemsRouter = require("./routes/items.routes.js")
+
+
+const clubRouter = require("./routes/clubs.routes.js")
+const eventRouter = require("./routes/events.routes.js")
+
+const serviceRouter=require("./routes/service.routes.js")
+
 
 require('dotenv').config();
 app.use(cors());
@@ -27,7 +35,12 @@ app.use(express.json());
 app.use("/api/auth", authRouter);
 app.use("/api/lostandfound", lostandfound);
 app.use("/api/aws",awsUpload);
+
 app.use("/api/items",itemsRouter)
+app.use('/api/services',serviceRouter)
+
+app.use("/api/clubs" , clubRouter);
+app.use("api/events" , eventRouter);
 
 
 app.use((err, req, res, next) => {
