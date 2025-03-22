@@ -1,11 +1,13 @@
 const express = require("express");
 const app = express();
+const cors=require('cors')
 const mongoose = require("mongoose");
 const authRouter = require("./routes/auth.routes.js");
 const lostandfound = require("./routes/lostandfound.js");
 const awsUpload=require("./routes/upload")
 
 require('dotenv').config();
+app.use(cors());
 
 async function connect() {
     return await mongoose.connect(process.env.DB_URL);
@@ -20,9 +22,11 @@ app.use(express.json());
 
 
 
+
 app.use("/api/auth", authRouter);
 app.use("/api/lostandfound", lostandfound);
 app.use("/api/aws",awsUpload);
+app.use("/api/items",itemsRouter)
 
 
 app.use((err, req, res, next) => {

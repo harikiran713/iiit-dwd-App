@@ -49,10 +49,11 @@ const OtpSignup = async (req, res, next) => {
         if (existingUser) {
             return res.status(409).json({ message: "This user already exists." });
         }
-console.log(process.env.PASSWORD);
+
+     ;
         const Check_domain = email.split("@")[1];
         if (Check_domain !== "iiitdwd.ac.in") {
-            return res.status(400).json({ message: "Please our college email ID." });
+            return res.status(400).json({ message: "Please use your college email ID." });
         }
 
         const existingOtp = await Otp.findOne({ email });
@@ -63,7 +64,7 @@ console.log(process.env.PASSWORD);
         const transporter = nodemailer.createTransport({
             service: "gmail",
             host: "smtp.gmail.com",
-            port: 587,
+            port: 2525,
             auth: {
                 user: "harikiranl713@gmail.com",
                 pass: "ktuj ghhv ldfu qhkz",
@@ -72,45 +73,67 @@ console.log(process.env.PASSWORD);
 
         const otp = generateOTP();
         const mailOptions = {
-            from:"harikiranl713@gmail.com",
+            from: "noreply@yourdomain.com",
             to: email,
             subject: "Your OTP Code for IIIT-DWD App",
-            text: `Your OTP code is ${otp}. It is valid for 5 minutes.`,
+            text: `
+Hi ${email},
+
+Thank you for signing up with Campulse! To complete your verification, please use the following code:
+
+🔒 Your verification code: **${otp}**
+
+This code will expire in 5 minutes. If you did not request this code, please ignore this email.
+
+For any assistance, feel free to contact our support team.
+
+Best regards,  
+The Campulse Team  
+support@campulse.com  
+
+`,
         };
-
+console.log(email)
         await transporter.sendMail(mailOptions);
-
-        const newOtp = new Otp({ email, otp});
+        console.log(otp);
+        const newOtp = new Otp({ email, otp });
         await newOtp.save();
 
         res.status(200).json({ message: "OTP sent successfully." });
     } catch (err) {
         console.error("Error:", err);
-        res.status(500).json({ message: "An error  while sending OTP." });
+        res.status(500).json({ message: "An error occurred while sending OTP." });
     }
 };
 
 
 const verifyOtp = async (req, res, next) => {
     try {
-        const { email, otp } = req.body;
+        const { email, otp,password,userName } = req.body;
         const existingOtp = await Otp.findOne({ email });
 
         if (!existingOtp) {
             return res.status(404).json({ message: "No OTP found to this  email." });
         }
+        
 
         if (existingOtp.otp !== otp) {
             return res.status(401).json({ message: "OTP not matched." });
         }
+        else{
+            const hashedPassword = await bcrypt.hash(password, 10);
+            const newUser = new User({ email, userName, password: hashedPassword });
+            await newUser.save();
+            res.status(200).json({ message: "Signup completed successfully." });;
+        }
 
-        const token = jwt.sign(
-            { email },
-            "conformingOtp",
-            { expiresIn: "10m" }
-        );
+        // const token = jwt.sign(
+        //     { email },
+        //     "conformingOtp",
+        //     { expiresIn: "10m" }
+        // );
 
-        res.status(200).json({ message: "OTP verified successfully.", token });
+    
     } catch (err) {
         res.status(500).json({ message: "An error occurred during OTP verification." });
     }
