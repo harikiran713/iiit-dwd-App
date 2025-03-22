@@ -17,6 +17,7 @@ const addLost = async (req, res, next) => {
         res.status(500).json({ message: "Error in adding to lost items." });
     }
 };
+ 
 
 const addFound = async (req, res, next) => {
     const { userId, title, description, contact, photoLink } = req.body;
@@ -52,6 +53,7 @@ const viewLost = async (req, res, next) => {
         res.status(500).json({ message: "There was an error in viewing the lost items." });
     }
 };
+
 
 module.exports = {
     addLost,

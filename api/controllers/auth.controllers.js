@@ -136,7 +136,10 @@ const keepPasswordUser = async (req, res, next) => {
         res.status(500).json({ message: "An error occurred during signup." });
     }
 };
+//google sign in 
+
 //for the forgoten password i am  sending the otp to mail to keep the new password 
+
 const forgottenPassword = async (req, res, next) => {
     const { email } = req.body;
 
@@ -224,6 +227,8 @@ const keepForgottenPassword = async (req, res, next) => {
         res.status(500).json({ message: "An error occurred during password update." });
     }
 };
+
+
 
 
 module.exports = {

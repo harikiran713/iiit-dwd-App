@@ -5,6 +5,7 @@ const authMiddleware = (req, res, next) => {
     //optional chaining ? is meaning of option chaining 
     
     
+    
     if (!token) {
         return res.status(401).json({ message: "Please login first." });
     }

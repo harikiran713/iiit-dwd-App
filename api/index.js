@@ -3,6 +3,7 @@ const app = express();
 const mongoose = require("mongoose");
 const authRouter = require("./routes/auth.routes.js");
 const lostandfound = require("./routes/lostandfound.js");
+const awsUpload=require("./routes/upload")
 
 require('dotenv').config();
 
@@ -21,6 +22,7 @@ app.use(express.json());
 
 app.use("/api/auth", authRouter);
 app.use("/api/lostandfound", lostandfound);
+app.use("/api/aws",awsUpload);
 
 
 app.use((err, req, res, next) => {
