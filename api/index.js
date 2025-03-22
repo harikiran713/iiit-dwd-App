@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 const authRouter = require("./routes/auth.routes.js");
 const lostandfound = require("./routes/lostandfound.js");
 const awsUpload=require("./routes/upload")
+const itemsRouter = require("./routes/items.routes.js")
 
 require('dotenv').config();
 app.use(cors());
