@@ -5,6 +5,8 @@ const mongoose = require("mongoose");
 const authRouter = require("./routes/auth.routes.js");
 const lostandfound = require("./routes/lostandfound.js");
 const awsUpload=require("./routes/upload")
+const clubRouter = require("./routes/clubs.routes.js")
+const eventRouter = require("./routes/events.routes.js")
 
 require('dotenv').config();
 app.use(cors());
@@ -26,8 +28,13 @@ app.use(express.json());
 app.use("/api/auth", authRouter);
 app.use("/api/lostandfound", lostandfound);
 app.use("/api/aws",awsUpload);
+<<<<<<< HEAD
 app.use("/api/items",itemsRouter)
 
+=======
+app.use("/api/clubs" , clubRouter);
+app.use("api/events" , eventRouter);
+>>>>>>> ca127c1 (Events and Clubs features)
 
 app.use((err, req, res, next) => {
     const statuscode = err.statusCode || 500;
