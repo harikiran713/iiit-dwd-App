@@ -26,7 +26,7 @@ const uploadPhoto = async (req, res, next) => {
         }
 
         const photoLink = `https://iiit-app.s3.ap-south-1.amazonaws.com/${Location}/${random}`;
-        const presignedUrl = await putObjectUrl(Location, random); // Added `await` here
+        const presignedUrl = await putObjectUrl(Location, random); 
 
         res.json({ presignedUrl, photoLink });
     } catch (err) {
