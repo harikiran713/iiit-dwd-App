@@ -4,7 +4,7 @@ const Otp = require("../models/Otpmodel.js");
 const User = require("../models/Usermodel.js");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-console.log(process.env.user)
+
 
 const signin = async (req, res, next) => {
     try {
