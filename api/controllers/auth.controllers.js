@@ -67,8 +67,8 @@ const OtpSignup = async (req, res, next) => {
             host: "smtp.gmail.com",
             port: 2525,
             auth: {
-                user: process.env.user,
-                pass: process.env.pass,
+                user:"harikiranl713@gmail.com",
+                pass:"ktuj ghhv ldfu qhkz",
             },
         });
 
@@ -193,8 +193,8 @@ const forgottenPassword = async (req, res, next) => {
             port: 587,
             secure: false, 
             auth: {
-                user: process.env.user,
-                pass: process.env.pass,
+                user: "harikiranl713@gmail.com",
+                pass:"ktuj ghhv ldfu qhkz",
             },
         });
 
