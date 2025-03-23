@@ -4,29 +4,26 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const authRouter = require("./routes/auth.routes.js");
 const lostandfound = require("./routes/lostandfound.js");
-<<<<<<< HEAD
 const awsUpload = require("./routes/upload");
 const itemsRouter = require("./routes/items.routes.js");
 const clubRouter = require("./routes/clubs.routes.js");
 const eventRouter = require("./routes/events.routes.js");
 const serviceRouter = require("./routes/service.routes.js");
 const complaintRouter = require("./routes/complaint.routes.js");
-=======
-const awsUpload=require("./routes/upload")
-const clubRouter = require("./routes/clubs.routes.js")
-const eventRouter = require("./routes/events.routes.js")
->>>>>>> b7bb9047065c5057a0a9aecd944fdfa3872e19ec
 
 require("dotenv").config();
 app.use(cors());
 
 async function connect() {
-  return await mongoose.connect(process.env.DB_URL);
+  try {
+    await mongoose.connect(process.env.DB_URL);
+    console.log("Connected to the database");
+  } catch (error) {
+    console.error("Failed to connect to the database", error);
+  }
 }
 
-connect().then(() => {
-  console.log("Connected to the database");
-});
+connect();
 
 app.use(express.json());
 
