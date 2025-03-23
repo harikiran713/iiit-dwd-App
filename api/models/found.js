@@ -26,7 +26,7 @@ const foundSchema = new mongoose.Schema({
         default: Date.now,
         expires: 14 * 24 * 60 * 60 
     }
-});
+}, { timestamps: true });
 
 
 const foundModel = mongoose.model('Found', foundSchema);

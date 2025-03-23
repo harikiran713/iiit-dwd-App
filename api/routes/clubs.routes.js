@@ -1,5 +1,5 @@
 const express = require("express");
-const router = express.router();
+const router = express.Router();
 const authMiddleware = require("../utils/authMiddleware");
 const viewClubs  = require("../controllers/clubs.controller");
 

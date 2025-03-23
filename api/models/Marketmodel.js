@@ -31,7 +31,7 @@ const marketplaceSchema = new mongoose.Schema({
         default: Date.now,
         expires: 30 * 24 * 60 * 60  // Expire after 30 days
     }
-});
+}, { timestamps: true });
 
 const Marketplace = mongoose.model('Marketplace', marketplaceSchema);
 

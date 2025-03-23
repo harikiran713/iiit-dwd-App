@@ -11,3 +11,6 @@ const servicesFunction=async(req,res,next)=>
         res.status(500).json({message:"error in fetching the services"})
     }
 }
+module.exports={
+    servicesFunction
+}

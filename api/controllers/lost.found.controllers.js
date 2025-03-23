@@ -38,7 +38,7 @@ const addFound = async (req, res, next) => {
 
 const viewFound = async (req, res, next) => {
     try {
-        const foundArray = await foundModel.find();
+        const foundArray = await foundModel.find().sort({createdAt:-1});
         res.status(200).json(foundArray);
     } catch (error) {
         res.status(500).json({ message: "There was an error in viewing the found items." });
@@ -47,7 +47,7 @@ const viewFound = async (req, res, next) => {
 
 const viewLost = async (req, res, next) => {
     try {
-        const lostArray = await lostModel.find();
+        const lostArray = await lostModel.find().sort({createdAt:-1});
         res.status(200).json(lostArray);
     } catch (error) {
         res.status(500).json({ message: "There was an error in viewing the lost items." });

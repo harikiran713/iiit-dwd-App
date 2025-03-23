@@ -21,7 +21,7 @@ const eventsSchema = new mongoose.Schema({
         type: String,
         required: true
     }
-});
+}, { timestamps: true });
 
 const eventsModel = mongoose.model('Events',eventsSchema);
 

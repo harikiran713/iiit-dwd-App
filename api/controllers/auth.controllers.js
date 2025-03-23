@@ -4,6 +4,7 @@ const Otp = require("../models/Otpmodel.js");
 const User = require("../models/Usermodel.js");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+console.log(process.env.user)
 
 const signin = async (req, res, next) => {
     try {
@@ -66,8 +67,8 @@ const OtpSignup = async (req, res, next) => {
             host: "smtp.gmail.com",
             port: 2525,
             auth: {
-                user: "harikiranl713@gmail.com",
-                pass: "ktuj ghhv ldfu qhkz",
+                user: process.env.user,
+                pass: process.env.pass,
             },
         });
 
@@ -192,8 +193,8 @@ const forgottenPassword = async (req, res, next) => {
             port: 587,
             secure: false, 
             auth: {
-                user: "harikiranl713@gmail.com",
-                pass: "ktuj ghhv ldfu qhkz", 
+                user: process.env.user,
+                pass: process.env.pass,
             },
         });
 
