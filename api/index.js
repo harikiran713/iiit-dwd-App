@@ -5,12 +5,8 @@ const mongoose = require("mongoose");
 const authRouter = require("./routes/auth.routes.js");
 const lostandfound = require("./routes/lostandfound.js");
 const awsUpload=require("./routes/upload")
-<<<<<<< HEAD
 const clubRouter = require("./routes/clubs.routes.js")
 const eventRouter = require("./routes/events.routes.js")
-=======
-const serviceRouter=require("./routes/service.routes.js")
->>>>>>> caf2dfb (added services)
 
 require('dotenv').config();
 app.use(cors());
