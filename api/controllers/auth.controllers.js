@@ -94,9 +94,9 @@ support@campulse.com
 
 `,
         };
-console.log(email)
+
         await transporter.sendMail(mailOptions);
-        console.log(otp);
+      
         const newOtp = new Otp({ email, otp });
         await newOtp.save();
 
