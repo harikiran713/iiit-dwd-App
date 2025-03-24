@@ -2,13 +2,13 @@ const ComplaintModel = require("../models/complaintModel");
 
 const addComplaint = async (req, res, next) => {
     try {
-        const { photoUrl, registrationNumber, decription } = req.body;
+        const {userId, photoUrl, registrationNumber, decription } = req.body;
         const newComplaint = new ComplaintModel({
-            photoUrl,
+            userId,  photoUrl,
             registrationNumber,
             decription,
         });
-
+ 
         await newComplaint.save();
         res.status(200).json({ message: "Complaint was added" });
     } catch (error) {
