@@ -6,3 +6,5 @@ router.get("/view",authMiddleware,viewComplaints)
 router.put("/:id/upvote",authMiddleware,upvoteComplaint)
 router.post("/add",authMiddleware,addComplaint)
 module.exports=router
+
+
