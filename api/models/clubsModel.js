@@ -5,7 +5,7 @@ const clubsSchema = new mongoose.Schema({
         type : String,
         required : true
     },
-    photoLink: {
+    logoUrl: {
         type: String,
         required: true
     },
