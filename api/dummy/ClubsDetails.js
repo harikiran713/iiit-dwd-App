@@ -2,7 +2,8 @@ const clubs = [
     {
       name: "Velocity",
       description: "Velocity is the development club of IIIT Dharwad aiming to cultivate and foster a development culture among all the students. The club encompasses a community that allows everyone to participate and grow together. Velocity has held many events and workshops to build a strong confidence and foundation among all batches in development. IIIT Dharwad's website is designed & developed by Velocity!",
-      logoUrl: "https://iiitdwd.ac.in/clubs/velocity_logo.png"
+      logoUrl: "https://iiitdwd.ac.in/clubs/velocity_logo.png",
+      
     },
     {
       name: "Iridescence",

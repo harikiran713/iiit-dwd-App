@@ -19,7 +19,7 @@ const uploadPhoto = async (req, res, next) => {
             const command = new PutObjectCommand({
                 Bucket: "iiit-app",
                 Key: `${Location}/${random}`,
-                ContentType: "application/octet-stream",
+              
             });
             const presignedUrl = await getSignedUrl(s3Client, command);
             return presignedUrl;
