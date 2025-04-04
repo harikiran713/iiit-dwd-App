@@ -2,7 +2,7 @@ const clubs = [
     {
       name: "Velocity",
       description: "Velocity is the development club of IIIT Dharwad aiming to cultivate and foster a development culture among all the students. The club encompasses a community that allows everyone to participate and grow together. Velocity has held many events and workshops to build a strong confidence and foundation among all batches in development. IIIT Dharwad's website is designed & developed by Velocity!",
-      logoUrl: "https://iiitdwd.ac.in/clubs/velocity_logo.png",
+   
       
       logoUrl: "https://iiit-app.s3.ap-south-1.amazonaws.com/clubs/Clubs+IIIT+Dharwad.png",
       email: "velocity@iiitdwd.ac.in",
@@ -20,7 +20,7 @@ const clubs = [
       description: "The IEEE Student Branch and Computer Society of IIIT Dharwad serves as a vibrant hub for students passionate about technology, engineering, and innovation. Our branch fosters a community of learning, collaboration, and professional growth. We aim to empower students with the knowledge, skills, and networking opportunities essential for success in the various fields of technology through a wide range of activities, workshops, seminars, and projects.",
       logoUrl: "https://iiit-app.s3.ap-south-1.amazonaws.com/clubs/IIIT+Dharwad+Clubs.jpg",
       email: "ieeestudentbranch@iiitdwd.ac.in",
-      instagram :" "
+      instagram :" jhf"
     
     },
     {
@@ -42,7 +42,7 @@ const clubs = [
       description: "E-Cell Club at IIIT Dharwad is a dynamic platform designed to empower students with entrepreneurial ambitions. We are dedicated to nurturing the entrepreneurial spirit within our students by providing them with the resources, mentorship, and opportunities they need to succeed. Our club is a hub for innovation and creativity, where students can explore their ideas, develop business skills, and connect with like-minded individuals and industry professionals.",
       logoUrl: "https://iiit-app.s3.ap-south-1.amazonaws.com/clubs/Ecell+IIIT+Dharwad.jpeg",
       email: "ecell@iiitdwd.ac.in",
-      instagram :" "
+      instagram :"lgy8 "
     },
     {
       name: "LimeLight",
@@ -56,7 +56,7 @@ const clubs = [
       description: "BlocSoc is an active community focused on the exploration and advancement of blockchain technology. Our club unites enthusiasts and developers to learn, collaborate, and drive innovation in the blockchain arena.",
       logoUrl: "https://iiit-app.s3.ap-south-1.amazonaws.com/clubs/Blocsoc+Club.jpg",
       email: "blocsoc@iiitdwd.ac.in",
-      instagram :" "
+      instagram :"vjf "
 
     },
     {
@@ -137,5 +137,6 @@ const clubs = [
         instagram : "https://www.instagram.com/return0_iiitdwd/"
       }
 ];
+module.exports=clubs;
     
   
