@@ -10,8 +10,6 @@ const clubRouter = require("./routes/clubs.routes.js");
 const eventRouter = require("./routes/events.routes.js");
 const serviceRouter = require("./routes/service.routes.js");
 const complaintRouter = require("./routes/complaint.routes.js");
-
-
 require("dotenv").config();
 app.use(cors());
 
@@ -36,7 +34,7 @@ app.use("/api/services", serviceRouter);
 app.use("/api/clubs", clubRouter);
 app.use("/api/events", eventRouter);
 app.use("/api/complaint", complaintRouter);
-//console.log(clubs)
+
 
 
 app.use((err, req, res, next) => {
