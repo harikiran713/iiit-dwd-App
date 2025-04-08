@@ -2,11 +2,11 @@ const Marketplace = require("../models/Marketmodel.js");
 
 // POST /api/items/add
 const addItem = async (req, res, next) => {
-  const { itemName, description, price, contact, photoLink } = req.body;
+  const { userId,itemName, description, price, contact, photoLink } = req.body;
 
   try {
     const newItem = new Marketplace({
-      userId: req.userId, // Make sure your auth middleware sets this
+      userId,// Make sure your auth middleware sets this
       itemName,
       description,
       price,
