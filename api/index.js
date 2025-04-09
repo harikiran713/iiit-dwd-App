@@ -10,6 +10,7 @@ const clubRouter = require("./routes/clubs.routes.js");
 const eventRouter = require("./routes/events.routes.js");
 const serviceRouter = require("./routes/service.routes.js");
 const complaintRouter = require("./routes/complaint.routes.js");
+const profileRouter=require("./routes/profile.routes")
 require("dotenv").config();
 app.use(cors());
 
