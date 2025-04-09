@@ -1,34 +1,34 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const complaintSchema = new mongoose.Schema({
-     userId: {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: 'User',
-            required: true
-        },
-    photoUrl: {
-        type: String,
-        required: true
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
     },
-
-    registrationNUmber: {
+    photoLink: {
         type: String,
-        default: 'anonymous'
+        required: true,
     },
-    decription: {
+    registrationNumber: {
         type: String,
-        required: true
+        default: "anonymous",
+    },
+    description: {
+        type: String,
+        required: true,
     },
     upvotes: {
         type: Number,
-        default: 0
+        default: 0,
     },
     resolved: {
         type: Boolean,
-        default: false
-    }
+        default: false,
+    },
 }, { timestamps: true });
 
-const Complaint = mongoose.model('Complaint', complaintSchema);
+// ✅ Fix: Avoid redefining the model
+const ComplaintModel = mongoose.models.Complaint || mongoose.model("Complaint", complaintSchema);
 
-module.exports = Complaint;
+module.exports = ComplaintModel;

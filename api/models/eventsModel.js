@@ -1,28 +1,33 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-const eventsSchema = new mongoose.Schema({
-    tile : {
-        type : String,
-        required : true
-    },
-    time : {
-        type : Date,
-        required : true
-    },
-    venue : {
-        type : String,
-        required : true
-    },
-    description : {
-        type : String,
-        required : true
+const complaintSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
     },
     photoLink: {
         type: String,
         required: true
+    },
+    registrationNUmber: {
+        type: String,
+        default: 'anonymous'
+    },
+    description: {
+        type: String,
+        required: true
+    },
+    upvotes: {
+        type: Number,
+        default: 0
+    },
+    resolved: {
+        type: Boolean,
+        default: false
     }
 }, { timestamps: true });
 
-const eventsModel = mongoose.model('Events',eventsSchema);
+const Complaint = mongoose.model('Complaint', complaintSchema);
 
-module.exports = eventsModel;
+module.exports = Complaint;
