@@ -110,7 +110,7 @@ support@campulse.com
 
 const verifyOtp = async (req, res, next) => {
     try {
-        const { email, otp,password,userName } = req.body;
+        const { email, otp,password } = req.body;
         const existingOtp = await Otp.findOne({ email });
 
         if (!existingOtp) {
@@ -123,7 +123,7 @@ const verifyOtp = async (req, res, next) => {
         }
         else{
             const hashedPassword = await bcrypt.hash(password, 10);
-            const newUser = new User({ email, userName, password: hashedPassword });
+            const newUser = new User({ email, password: hashedPassword });
             await newUser.save();
             res.status(200).json({ message: "Signup completed successfully." });;
         }
