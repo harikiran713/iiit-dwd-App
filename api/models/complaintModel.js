@@ -12,7 +12,7 @@ const complaintSchema = new mongoose.Schema({
     },
     registrationNumber: {
         type: String,
-   
+        default: "Anonymous", // ✅ fallback default
     },
     description: {
         type: String,
@@ -28,7 +28,6 @@ const complaintSchema = new mongoose.Schema({
     },
 }, { timestamps: true });
 
-// ✅ Fix: Avoid redefining the model
 const ComplaintModel = mongoose.models.Complaint || mongoose.model("Complaint", complaintSchema);
 
 module.exports = ComplaintModel;

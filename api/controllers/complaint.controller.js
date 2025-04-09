@@ -1,20 +1,22 @@
-const ComplaintModel = require("../models/complaintModel");
+
 const UpVote = require("../models/upVoteModel");
 
-// Add a complaint
-const addComplaint = async (req, res, next) => {
-    try {
-        const { userId, photoLink, registrationNumber , description } = req.body;
+const ComplaintModel = require("../models/complaintModel"); // adjust path accordingly
 
-        // Validation: description is required
+const addComplaint = async (req, res) => {
+    try {
+        const { userId, photoLink, registrationNumber, description } = req.body;
+
         if (!description) {
             return res.status(400).json({ message: "Description is required" });
         }
 
+        const regNumberToUse = registrationNumber?.trim() || "Anonymous";
+
         const newComplaint = new ComplaintModel({
             userId,
             photoLink,
-            registrationNumber,
+            registrationNumber: regNumberToUse,
             description,
         });
 
@@ -25,7 +27,6 @@ const addComplaint = async (req, res, next) => {
         res.status(500).json({ message: "Failed in adding the complaint", error: error.message });
     }
 };
-
 // Upvote a complaint
 const upvoteComplaint = async (req, res, next) => {
     try {
