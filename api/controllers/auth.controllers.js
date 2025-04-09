@@ -110,36 +110,54 @@ support@campulse.com
 
 const verifyOtp = async (req, res, next) => {
     try {
-        const { email, otp,password, userName } = req.body;
-        const existingOtp = await Otp.findOne({ email });
-
-        if (!existingOtp) {
-            return res.status(404).json({ message: "No OTP found to this  email." });
-        }
+        const { email, otp, password, userName } = req.body;
         
+        // Validate input
+        if (!email || !otp || !password || !userName) {
+            return res.status(400).json({ message: "All fields are required." });
+        }
+
+        // Check OTP
+        const existingOtp = await Otp.findOne({ email });
+        if (!existingOtp) {
+            return res.status(404).json({ message: "No OTP found for this email." });
+        }
 
         if (existingOtp.otp !== otp) {
-            return res.status(401).json({ message: "OTP not matched." });
-        }
-        else{
-            const hashedPassword = await bcrypt.hash(password, 10);
-            const newUser = new User({ email, password: hashedPassword,userName });
-            await newUser.save();
-            res.status(200).json({ message: "Signup completed successfully." });;
+            return res.status(401).json({ message: "Invalid OTP." });
         }
 
-        // const token = jwt.sign(
-        //     { email },
-        //     "conformingOtp",
-        //     { expiresIn: "10m" }
-        // );
+        // Check if user already exists (just in case)
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(409).json({ message: "User already exists." });
+        }
 
-    
+        // Create new user
+        const hashedPassword = await bcrypt.hash(password, 10);
+        const newUser = new User({ email, password: hashedPassword, userName });
+        await newUser.save();
+
+        // Generate JWT token for immediate login
+        const token = jwt.sign(
+            { userId: newUser._id },
+            "mgfck", // Replace with your actual secret
+            { expiresIn: '1d' }
+        );
+
+        // Clean up OTP
+        await Otp.deleteOne({ email });
+
+        res.status(200).json({ 
+            token,
+            message: "Account created and verified successfully." 
+        });
+
     } catch (err) {
+        console.error("OTP Verification Error:", err);
         res.status(500).json({ message: "An error occurred during OTP verification." });
     }
 };
-
 const keepPasswordUser = async (req, res, next) => {
     try {
         const { token, userName, password, confirmPassword } = req.body;
