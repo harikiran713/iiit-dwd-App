@@ -12,7 +12,7 @@ const complaintSchema = new mongoose.Schema({
     },
     registrationNumber: {
         type: String,
-        default: "anonymous",
+   
     },
     description: {
         type: String,
