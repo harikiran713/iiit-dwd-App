@@ -34,6 +34,7 @@ app.use("/api/services", serviceRouter);
 app.use("/api/clubs", clubRouter);
 app.use("/api/events", eventRouter);
 app.use("/api/complaint", complaintRouter);
+app.use("/api/profile",profileRouter)
 
 
 

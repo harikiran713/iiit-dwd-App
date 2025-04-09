@@ -110,7 +110,7 @@ support@campulse.com
 
 const verifyOtp = async (req, res, next) => {
     try {
-        const { email, otp,password } = req.body;
+        const { email, otp,password, userName } = req.body;
         const existingOtp = await Otp.findOne({ email });
 
         if (!existingOtp) {
