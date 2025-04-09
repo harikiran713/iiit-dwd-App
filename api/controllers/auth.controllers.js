@@ -123,7 +123,7 @@ const verifyOtp = async (req, res, next) => {
         }
         else{
             const hashedPassword = await bcrypt.hash(password, 10);
-            const newUser = new User({ email, password: hashedPassword });
+            const newUser = new User({ email, password: hashedPassword,userName });
             await newUser.save();
             res.status(200).json({ message: "Signup completed successfully." });;
         }
